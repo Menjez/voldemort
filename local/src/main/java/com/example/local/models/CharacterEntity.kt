@@ -34,8 +34,5 @@ data class CharacterEntity(
         val wood:String,
         val core:String,
         val length:Int
-    ){
-        //mapping
-    }
-    //mapping
+    )
 }

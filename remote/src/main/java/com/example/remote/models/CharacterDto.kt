@@ -12,7 +12,7 @@ data class CharacterDto(
     @SerialName("gender") val gender: String,
     @SerialName("house") val house: String,
     @SerialName("dateOfBirth") val dateOfBirth: String,
-    @SerialName("yearOfBirth") val yearOfBirth: Int,
+    @SerialName("yearOfBirth") val yearOfBirth: String,
     @SerialName("wizard") val wizard: Boolean,
     @SerialName("ancestry") val ancestry: String,
     @SerialName("eyeColour") val eyeColour: String,

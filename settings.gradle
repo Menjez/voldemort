@@ -16,3 +16,6 @@ rootProject.name = "Voldemort"
 include ':app'
 include ':remote'
 include ':local'
+include ':data'
+include ':domain'
+include ':presentation'
