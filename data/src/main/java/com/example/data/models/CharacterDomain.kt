@@ -4,7 +4,7 @@ package com.example.data.models
 data class WandDomain(
     val wood: String,
     val core: String,
-    val length: Int
+    val length: Double?
 ) {}
 
 data class CharacterDomain(
@@ -14,8 +14,8 @@ data class CharacterDomain(
     val species: String,
     val gender: String,
     val house: String,
-    val dateOfBirth: String,
-    val yearOfBirth: String,
+    val dateOfBirth: String?,
+    val yearOfBirth: Int?,
     val wizard: Boolean,
     val ancestry: String,
     val eyeColour: String,

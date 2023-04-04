@@ -5,7 +5,9 @@ import com.example.data.repository.CharacterRepository
 import com.example.data.repository.CharacterRepositoryImpl
 
 class GetCharactersUseCase(context: Context) {
+
     private val repository: CharacterRepository = CharacterRepositoryImpl(context)
 
     suspend fun getCharacters() = repository.getCharacters()
+
 }

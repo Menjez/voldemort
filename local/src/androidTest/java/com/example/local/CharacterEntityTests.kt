@@ -34,13 +34,13 @@ class CharacterEntityTests {
                 gender = "male",
                 house = house,
                 dateOfBirth = "31-07-1980",
-                yearOfBirth = "1980",
+                yearOfBirth = 1980,
                 wizard = true,
                 ancestry = "half-blood",
                 eyeColor = "green",
                 hairColor = "black",
                 wand = CharacterEntity.Wand(
-                    wood = "holly", core = "phoenix feather", length = 11
+                    wood = "holly", core = "phoenix feather", length = 11.0
                 ),
                 patronus = "stag",
                 hogwartsStudent = true,

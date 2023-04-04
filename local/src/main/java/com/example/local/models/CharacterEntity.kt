@@ -14,8 +14,8 @@ data class CharacterEntity(
     @ColumnInfo(name = "species") val species: String,
     @ColumnInfo(name = "gender") val gender: String,
     @ColumnInfo(name = "house") val house: String,
-    @ColumnInfo(name = "dateOfBirth") val dateOfBirth: String,
-    @ColumnInfo(name = "yearOfBirth") val yearOfBirth: String,
+    @ColumnInfo(name = "dateOfBirth") val dateOfBirth: String?,
+    @ColumnInfo(name = "yearOfBirth") val yearOfBirth: Int?,
     @ColumnInfo(name = "wizard") val wizard: Boolean,
     @ColumnInfo(name = "ancestry") val ancestry: String,
     @ColumnInfo(name = "eyeColor") val eyeColor: String,
@@ -33,6 +33,6 @@ data class CharacterEntity(
     data class Wand(
         val wood:String,
         val core:String,
-        val length:Int
+        val length:Double?
     )
 }

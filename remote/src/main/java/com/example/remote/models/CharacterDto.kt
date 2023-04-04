@@ -11,8 +11,8 @@ data class CharacterDto(
     @SerialName("species") val species: String,
     @SerialName("gender") val gender: String,
     @SerialName("house") val house: String,
-    @SerialName("dateOfBirth") val dateOfBirth: String,
-    @SerialName("yearOfBirth") val yearOfBirth: String,
+    @SerialName("dateOfBirth") val dateOfBirth: String?,
+    @SerialName("yearOfBirth") val yearOfBirth: Int?,
     @SerialName("wizard") val wizard: Boolean,
     @SerialName("ancestry") val ancestry: String,
     @SerialName("eyeColour") val eyeColour: String,
@@ -30,7 +30,7 @@ data class CharacterDto(
     data class Wand(
         @SerialName("wood") val wood: String,
         @SerialName("core") val core: String,
-        @SerialName("length") val length: Int
+        @SerialName("length") val length: Double?
     ) {
         //mapping
     }
