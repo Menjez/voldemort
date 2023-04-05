@@ -1,4 +1,4 @@
-package com.example.presentation.characters
+package com.example.presentation.ui.characters
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -9,9 +9,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CharactersViewModel(app: Application) : AndroidViewModel(app) {
-
-    private val useCase = GetCharactersUseCase(app)
+class CharactersViewModel(
+    app: Application,
+) : AndroidViewModel(app) {
+    private val useCase: GetCharactersUseCase = GetCharactersUseCase(app)
     private val _characters = MutableStateFlow<List<CharacterDomain>>(listOf())
     val characters get() = _characters.asStateFlow()
     private val error = MutableStateFlow<String?>(null)
@@ -24,8 +25,7 @@ class CharactersViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             try {
                 _characters.value = useCase.getCharacters()
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 error.value = e.message.toString()
             }
         }
