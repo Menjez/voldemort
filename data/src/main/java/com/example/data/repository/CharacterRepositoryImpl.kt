@@ -36,8 +36,10 @@ class CharacterRepositoryImpl(context: Context) : CharacterRepository {
     }
 
     override suspend fun getCharacter(id: String): CharacterDomain {
-        val character = database.getCharacterById(id)
-        return character.toDomain()
+        return withContext(Dispatchers.IO) {
+            val character = database.getCharacterById(id)
+            character.toDomain()
+        }
     }
 
     override suspend fun searchCharacters(query: String): List<CharacterDomain> {

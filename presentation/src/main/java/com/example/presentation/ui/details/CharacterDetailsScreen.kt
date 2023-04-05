@@ -1,11 +1,13 @@
 package com.example.presentation.ui.details
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,9 +18,9 @@ import androidx.navigation.NavController
 @Composable
 fun CharacterDetailsScreen(viewModel: CharacterViewModel = viewModel(),navController: NavController) {
 
-    val details = viewModel._character.collectAsState().value
+    val details by viewModel.character.collectAsState()
 
-    Scaffold {
+    Scaffold(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(it), horizontalAlignment = Alignment.CenterHorizontally) {
          Text(text = details?.name ?: "oe" )
         }

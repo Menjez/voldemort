@@ -16,7 +16,7 @@ class CharacterViewModel(app:Application,savedStateHandle: SavedStateHandle):And
     private val useCase = GetCharacterUseCase(app)
 
     private val mCharacter = MutableStateFlow<CharacterDomain?>(null)
-    val _character = mCharacter.asStateFlow()
+    val character get() =  mCharacter.asStateFlow()
 
     private val error = MutableStateFlow<String?>(null)
 
