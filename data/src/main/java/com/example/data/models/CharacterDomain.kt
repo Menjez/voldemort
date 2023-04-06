@@ -29,4 +29,9 @@ data class CharacterDomain(
     val alive: Boolean,
     val image: String
 ) {
+
+    val displayName: String
+        get() = name.split(" ")
+            .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } }
+
 }

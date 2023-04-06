@@ -2,32 +2,44 @@ package com.example.presentation.ui.characters
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.data.models.CharacterDomain
 import com.example.domain.usecases.GetCharactersUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import com.example.domain.usecases.SearchUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class CharactersViewModel(
     app: Application,
 ) : AndroidViewModel(app) {
+
     private val useCase: GetCharactersUseCase = GetCharactersUseCase(app)
-    private val _characters = MutableStateFlow<List<CharacterDomain>>(listOf())
-    val characters get() = _characters.asStateFlow()
-    private val error = MutableStateFlow<String?>(null)
+    private val searchUseCase: SearchUseCase = SearchUseCase(app)
 
-    init {
-        getCharacters()
-    }
+    private val _query = MutableStateFlow("")
+    val query get() = _query.asStateFlow()
 
-    private fun getCharacters() {
-        viewModelScope.launch {
-            try {
-                _characters.value = useCase.getCharacters()
-            } catch (e: Exception) {
-                error.value = e.message.toString()
+    private val _uiState = MutableStateFlow(CharactersUIState())
+    val uiState get() = _uiState.asStateFlow()
+
+    val characters: Flow<List<CharacterDomain>>
+        get() = _query.flatMapLatest {
+            val list = when (it.isBlank()) {
+                true -> useCase.getCharacters()
+                false -> searchUseCase.searchCharacters(it)
             }
+            if (list.isEmpty()) _uiState.value = _uiState.value.copy(isLoading = false, error = "Could not get characters")
+            else _uiState.value = _uiState.value.copy(isLoading = false, success = true)
+            MutableStateFlow(list)
         }
+
+    fun updateQuery(str: String) {
+        _query.value = str
     }
 }
+
+data class CharactersUIState(
+    val isLoading: Boolean = true,
+    val error: String? = null,
+    val success: Boolean = false
+)

@@ -1,13 +1,11 @@
 package com.example.data.repository
 
 import android.content.Context
-import android.util.Log
-import com.example.data.models.CharacterDomain
 import com.example.data.mappers.toDomain
 import com.example.data.mappers.toEntity
+import com.example.data.models.CharacterDomain
 import com.example.local.database.CharacterDatabase
 import com.example.remote.VoldemortApi
-import com.example.remote.models.CharacterDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -20,17 +18,13 @@ class CharacterRepositoryImpl(context: Context) : CharacterRepository {
         return withContext(Dispatchers.IO) {
             val response = api.getCharacters()
             if (response.isSuccessful.not()) {
-                // do something
-                Log.i("KosiKosi", "getCharacters: ${response.message}")
                 return@withContext emptyList()
             }
 
-            val characters = response.data ?: emptyList<CharacterDto>()
+            val characters = response.data ?: emptyList()
             characters.map { it.toDomain().toEntity() }.forEach { database.insert(it) }
             val mCharacters = database.getCharacters()
-            mCharacters.map { it.toDomain() }/*.also {
-                for (char in it) Log.i("KosiKosi", "CHAR: $char")
-            }*/
+            mCharacters.map { it.toDomain() }
         }
 
     }
@@ -43,7 +37,9 @@ class CharacterRepositoryImpl(context: Context) : CharacterRepository {
     }
 
     override suspend fun searchCharacters(query: String): List<CharacterDomain> {
-        val list = database.searchCharacters(query)
-        return list.map { it.toDomain() }
+        return withContext(Dispatchers.IO) {
+            database.searchCharacters(query.lowercase())
+                .map { it.toDomain() }
+        }
     }
 }
