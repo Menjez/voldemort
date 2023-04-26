@@ -233,7 +233,7 @@ private fun CharacterItem(
             .height(200.dp)
 
     Box(
-        modifier = modifier.clickable { onItemClicked.invoke(character) }
+        modifier = modifier.clickable { onItemClicked.invoke(character) }.padding(8.dp)
     ) {
 
         Column(
